@@ -1,0 +1,1 @@
+/mnt/c/Users/takio/.wezterm.lua
