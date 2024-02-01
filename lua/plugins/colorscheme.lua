@@ -1,10 +1,10 @@
 return {
-  --  {
-  --    "LazyVim/LazyVim",
-  --    opts = {
-  --      colorscheme = "onedark",
-  --    },
-  --  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "tokyonight",
+    },
+  },
   --  {
   --    "rcarriga/nvim-notify",
   --    opts = {
