@@ -28,5 +28,7 @@ config.window_padding = {
   right = 10,
 }
 config.enable_scroll_bar = true
+-- enable capability of graphics
+config.kitty_graphics = true
 -- and finally, return the configuration to wezterm
 return config
