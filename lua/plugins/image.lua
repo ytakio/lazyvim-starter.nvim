@@ -1,7 +1,7 @@
 return {
   {
     "3rd/image.nvim",
-    optional = true,
+    optional = false,
     event = "LazyFile",
     init = function()
       package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
