@@ -12,7 +12,7 @@ return {
   {
     "folke/which-key.nvim",
     opts = function(_, opts)
-      opts.defaults["<leader>r"] = { name = "replace" }
+      opts.spec = { "<leader>r", group = "replace" }
     end,
   },
   {
