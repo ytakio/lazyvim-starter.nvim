@@ -8,6 +8,7 @@ local function augroup(name)
 end
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
+  group = augroup("c/c++"),
   pattern = { "c", "cpp" },
   callback = function()
     vim.b.autoformat = true
