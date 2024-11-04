@@ -1,12 +1,12 @@
 return {
-  {
-    "linux-cultist/venv-selector.nvim",
-    optional = true,
-    opts = function(_, opts)
-      --opts.enable_debug_output = true
-      opts.parents = 5
-    end,
-  },
+  -- {
+  --   "linux-cultist/venv-selector.nvim",
+  --   optional = true,
+  --   opts = function(_, opts)
+  --     --opts.enable_debug_output = true
+  --     opts.parents = 5
+  --   end,
+  -- },
   -- {
   --   "nvim-lualine/lualine.nvim",
   --   optional = true,
