@@ -42,6 +42,8 @@ require("lazy").setup({
     -- ui
     { import = "lazyvim.plugins.extras.ui.edgy" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.ui.mini-indentscope" },
+    { import = "lazyvim.plugins.extras.ui.treesitter-context" },
     -- util
     { import = "lazyvim.plugins.extras.util.dot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
