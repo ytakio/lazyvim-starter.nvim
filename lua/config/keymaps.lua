@@ -3,13 +3,14 @@
 -- Add any additional keymaps here
 local map = vim.keymap.set
 
--- local lazyterm = function()
---   LazyVim.terminal(nil, { cwd = LazyVim.root(), ctrl_hjkl = false })
--- end
---
--- map("n", "<leader>ft", lazyterm, { desc = "Terminal (Root Dir)" })
--- map("n", "<leader>fT", function()
---   LazyVim.terminal(nil, { ctrl_hjkl = false })
--- end, { desc = "Terminal (cwd)" })
--- map("n", "<c-/>", lazyterm, { desc = "Terminal (Root Dir)" })
--- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+local Util = require("lazyvim.util")
+local lazyterm = function()
+  Util.terminal(nil, { cwd = Util.root(), ctrl_hjkl = false, border = "rounded" })
+end
+
+map("n", "<leader>ft", lazyterm, { desc = "Terminal (Root Dir)" })
+map("n", "<leader>fT", function()
+  Util.terminal(nil, { ctrl_hjkl = false, border = "rounded" })
+end, { desc = "Terminal (cwd)" })
+map("n", "<c-/>", lazyterm, { desc = "Terminal (Root Dir)" })
+map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
