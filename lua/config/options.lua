@@ -9,3 +9,5 @@ vim.o.clipboard = "unnamed"
 vim.g.lazyvim_python_lsp = "pyright"
 -- Set to "ruff_lsp" to use the old LSP implementation version.
 vim.g.lazyvim_python_ruff = "ruff"
+-- set animations disabled
+vim.g.snacks_animate = false
