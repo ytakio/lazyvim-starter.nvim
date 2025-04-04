@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.b.autoformat = true
     opt.tabstop = 4
     opt.shiftwidth = 4
-    opt.expandtab = false
+    opt.expandtab = true
     opt.diffopt = opt.diffopt + "iwhite"
   end,
 })
