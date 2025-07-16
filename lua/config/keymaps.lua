@@ -14,3 +14,8 @@ local map = vim.keymap.set
 -- end, { desc = "Terminal (cwd)" })
 -- map("n", "<c-/>", lazyterm, { desc = "Terminal (Root Dir)" })
 -- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+
+map("i", "<M-h>", "<Left>")
+map("i", "<M-j>", "<Down>")
+map("i", "<M-k>", "<Up>")
+map("i", "<M-l>", "<Right>")
