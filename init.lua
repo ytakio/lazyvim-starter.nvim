@@ -1,53 +1,36 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 
-if vim.fn.executable("lazygit") == 0 then
-  local name = "lazygit"
-  local user = "jesseduffield"
-  local ext = ".tar.gz"
-  local version = "0.53.0"
-  local archive = name .. "_" .. version .. "_Linux_x86_64" .. ext
-  local file = name .. ext
-  local cmd = "curl -Lo "
-    .. file
-    .. " 'https://github.com/"
-    .. user
-    .. "/"
-    .. name
-    .. "/releases/download/v"
-    .. version
-    .. "/"
-    .. archive
-    .. "'"
-  os.execute(cmd)
-  os.execute("tar xf " .. file .. " " .. name)
+local function dl_util(target, base_url, archive)
   os.execute("mkdir -p ~/.local/bin/")
-  os.execute("mv " .. name .. "  ~/.local/bin/")
-  os.execute("rm " .. file)
+  local dl_cmd = string.format("curl -Lo %s '%s/%s'", archive, base_url, archive)
+  os.execute(dl_cmd)
+  os.execute(string.format("tar xf '%s' '%s'", archive, target))
+  os.execute(string.format("mv '%s' ~/.local/bin/", target))
+  os.execute(string.format("rm '%s'", archive))
 end
 
-if vim.fn.executable("fzf") == 0 then
-  local name = "fzf"
-  local user = "junegunn"
-  local ext = ".tar.gz"
-  local version = "0.64.0"
-  local archive = name .. "-" .. version .. "-linux_amd64" .. ext
-  local file = name .. ext
-  local cmd = "curl -Lo "
-    .. file
-    .. " 'https://github.com/"
-    .. user
-    .. "/"
-    .. name
-    .. "/releases/download/v"
-    .. version
-    .. "/"
-    .. archive
-    .. "'"
-  os.execute(cmd)
-  os.execute("tar xf " .. file .. " " .. name)
-  os.execute("mkdir -p ~/.local/bin/")
-  os.execute("mv " .. name .. "  ~/.local/bin/")
-  os.execute("rm " .. file)
+function Update_LazyGit(force)
+  local target = "lazygit"
+  if (vim.fn.executable(target) == 0) or force then
+    local id = "jesseduffield"
+    local version = "0.53.0"
+    local base_url = string.format("https://github.com/%s/%s/releases/download/v%s", id, target, version)
+    local archive = string.format("%s_%s_Linux_x86_64.tar.gz", target, version)
+    dl_util(target, base_url, archive)
+  end
 end
+Update_LazyGit(false)
+
+function Update_FzF(force)
+  local target = "fzf"
+  if (vim.fn.executable(target) == 0) or force then
+    local id = "junegunn"
+    local version = "0.64.0"
+    local base_url = string.format("https://github.com/%s/%s/releases/download/v%s", id, target, version)
+    local archive = string.format("%s-%s-linux_amd64.tar.gz", target, version)
+    dl_util(target, base_url, archive)
+  end
+end
+Update_FzF(false)
 
 require("config.lazy")
