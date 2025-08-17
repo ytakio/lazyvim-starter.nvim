@@ -13,7 +13,7 @@ function Update_LazyGit(force)
   local target = "lazygit"
   if (vim.fn.executable(target) == 0) or force then
     local id = "jesseduffield"
-    local version = "0.53.0"
+    local version = "0.54.2"
     local base_url = string.format("https://github.com/%s/%s/releases/download/v%s", id, target, version)
     local archive = string.format("%s_%s_Linux_x86_64.tar.gz", target, version)
     dl_util(target, base_url, archive)
@@ -25,7 +25,7 @@ function Update_FzF(force)
   local target = "fzf"
   if (vim.fn.executable(target) == 0) or force then
     local id = "junegunn"
-    local version = "0.64.0"
+    local version = "0.65.1"
     local base_url = string.format("https://github.com/%s/%s/releases/download/v%s", id, target, version)
     local archive = string.format("%s-%s-linux_amd64.tar.gz", target, version)
     dl_util(target, base_url, archive)
