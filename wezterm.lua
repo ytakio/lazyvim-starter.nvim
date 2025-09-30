@@ -7,8 +7,12 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-  config = wezterm.config_builder()
+	config = wezterm.config_builder()
 end
+
+-- Window size
+config.initial_cols = 104
+config.initial_rows = 29
 
 -- This is where you actually apply your config choices
 
@@ -16,19 +20,19 @@ end
 -- config.color_scheme = 'OneDark (base16)'
 config.color_scheme = "Tokyo Night"
 config.colors = {
-  scrollbar_thumb = "#000000",
+	scrollbar_thumb = "#000000",
 }
 
-config.default_domain = "WSL:Ubuntu"
+-- config.default_domain = "WSL:Ubuntu"
 config.font = wezterm.font("HackGen35 Console NF")
-config.font_size = 11.0
+config.font_size = 14.0
 
 config.window_background_opacity = 0.9
 config.window_padding = {
-  right = 10,
+	right = 10,
 }
 config.enable_scroll_bar = true
 -- enable capability of graphics
-config.kitty_graphics = true
+-- config.kitty_graphics = true
 -- and finally, return the configuration to wezterm
 return config
