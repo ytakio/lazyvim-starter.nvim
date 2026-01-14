@@ -17,7 +17,6 @@ return {
   -- },
   -- {
   --   "nvim-pack/nvim-spectre",
-  --   optional = true,
   --   opts = function(_, opts)
   --     opts.open_cmd = "noswapfile new"
   --   end,
@@ -74,7 +73,6 @@ return {
   -- },
   -- {
   --   "folke/edgy.nvim",
-  --   optional = true,
   --   opts = function(_, opts)
   --     local spectre_ft = "spectre_panel"
   --     for i, d in ipairs(opts.bottom) do

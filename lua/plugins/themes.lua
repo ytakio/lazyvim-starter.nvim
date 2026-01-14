@@ -1,6 +1,7 @@
 return {
   {
     "mason-org/mason.nvim",
+    event = "VeryLazy",
     opts = {
       ui = {
         border = "rounded",
@@ -9,6 +10,7 @@ return {
   },
   {
     "folke/tokyonight.nvim",
+    event = "VeryLazy",
     lazy = true,
     opts = {
       -- your configuration comes here
