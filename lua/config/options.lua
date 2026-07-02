@@ -3,6 +3,16 @@
 -- Add any additional options here
 vim.o.wrapscan = false
 vim.o.clipboard = "unnamedplus"
+vim.o.laststatus = 3
+
+-- Python for optimization of launch time
+if vim.fn.has("mac") == 1 then
+  -- For MacOS
+  vim.g.python3_host_prog = vim.fn.expand("~/.local/share/mise/shims/python3")
+else
+  -- For Linux
+  -- vim.g.python3_host_prog = "~/.local/share/mise/shims/python3"
+end
 
 -- Set Picker
 -- {telescope | fzf }

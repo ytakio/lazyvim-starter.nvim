@@ -27,7 +27,7 @@ config.colors = {
 config.font = wezterm.font("HackGen35 Console NF")
 config.font_size = 14.0
 
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.75
 config.window_padding = {
 	right = 10,
 }
