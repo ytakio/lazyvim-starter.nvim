@@ -24,6 +24,39 @@ return {
           timeout = 30000, -- Timeout in milliseconds
         },
       },
+      behaviour = {
+        auto_suggestions = false, -- Experimental stage
+        auto_set_highlight_group = true,
+        auto_set_keymaps = true,
+        auto_apply_diff_after_generation = false,
+        support_paste_from_clipboard = false,
+        minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+        enable_token_counting = true, -- Whether to enable token counting. Default to true.
+        auto_add_current_file = true, -- Whether to automatically add the current file when opening a new chat. Default to true.
+        auto_approve_tool_permissions = {
+          "rag_search",
+          -- "python",
+          "git_diff",
+          -- "git_commit",
+          "glob",
+          "search_keyword",
+          "read_file_toplevel_symbols",
+          "read_file",
+          "create_file",
+          -- "move_path",
+          "copy_path",
+          -- "delete_path",
+          "create_dir",
+          -- "bash",
+          "web_search",
+          "fetch",
+        }, -- Auto-approve specific tools only
+        ---@type "popup" | "inline_buttons"
+        confirmation_ui_style = "inline_buttons",
+        --- Whether to automatically open files and navigate to lines when ACP agent makes edits
+        ---@type boolean
+        acp_follow_agent_locations = true,
+      },
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -66,6 +99,17 @@ return {
   {
     "ravitemer/mcphub.nvim",
     event = "VeryLazy",
+    build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+    opts = {
+      auto_approve = function(params)
+        if params.server_name == "web-search" then
+          return true
+        end
+
+        -- default
+        return false
+      end,
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
@@ -86,9 +130,5 @@ return {
         },
       },
     },
-    build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
-    config = function()
-      require("mcphub").setup()
-    end,
   },
 }
