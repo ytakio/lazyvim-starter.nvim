@@ -6,7 +6,7 @@ return {
     build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
     event = "VeryLazy",
-    version = false, -- Never set this value to "*"! Never!
+    version = "v0.1.2", -- Never set this value to "*"! Never!
     ---@module 'avante'
     opts = {
       -- add any opts here
@@ -24,6 +24,7 @@ return {
           timeout = 30000, -- Timeout in milliseconds
         },
       },
+      disabled_tools = { "web_search" },
       behaviour = {
         auto_suggestions = false, -- Experimental stage
         auto_set_highlight_group = true,
@@ -48,7 +49,7 @@ return {
           -- "delete_path",
           "create_dir",
           -- "bash",
-          "web_search",
+          -- "web_search",
           "fetch",
         }, -- Auto-approve specific tools only
         ---@type "popup" | "inline_buttons"
