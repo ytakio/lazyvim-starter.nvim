@@ -95,6 +95,22 @@ return {
         },
         ft = { "markdown", "Avante" },
       },
+      {
+        "iamcco/markdown-preview.nvim",
+        opts = function()
+          local ft = vim.g.mkdp_filetypes
+          table.insert(ft, "Avante")
+          vim.g.mkdp_filetypes = ft
+        end,
+        keys = {
+          {
+            "<leader>cp",
+            ft = "Avante",
+            "<cmd>MarkdownPreviewToggle<cr>",
+            desc = "Markdown Preview",
+          },
+        },
+      },
     },
   },
   {

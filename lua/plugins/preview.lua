@@ -11,6 +11,5 @@ return {
       vim.g.mkdp_echo_preview_url = 1
       vim.g.mkdp_browser = "echo" -- just suppress opening browser
     end,
-    keys = {},
   },
 }
