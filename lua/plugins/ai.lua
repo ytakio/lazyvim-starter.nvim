@@ -23,6 +23,13 @@ return {
           model = "preview/Kimi-K2.6",
           timeout = 30000, -- Timeout in milliseconds
         },
+        sakura_dev = {
+          __inherited_from = "openai",
+          endpoint = "https://gateway.aipf-dev.sakuraha.jp/v1",
+          api_key_name = "SAKURA_AI_ACCOUNT_TOKEN_DEV", -- The name of the environment variable that contains the API key
+          model = "preview/Kimi-K2.7-Code",
+          timeout = 30000, -- Timeout in milliseconds
+        },
       },
       disabled_tools = { "web_search" },
       behaviour = {
