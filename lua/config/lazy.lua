@@ -50,6 +50,9 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.project" },
     -- vscode
     { import = "lazyvim.plugins.extras.vscode" },
+    -- AI
+    { import = "lazyvim.plugins.extras.ai.avante" },
+    { import = "lazyvim.plugins.extras.ai.copilot" },
     -- import other own plugins
     { import = "plugins" },
   },
