@@ -13,7 +13,7 @@ return {
       -- this file can contain specific instructions for your project
       instructions_file = "avante.md",
       -- for example
-      provider = "sakura",
+      provider = "sakura_dev",
       providers = {
         ---@type AvanteProvider
         sakura = {
@@ -39,7 +39,7 @@ return {
         auto_apply_diff_after_generation = false,
         support_paste_from_clipboard = false,
         minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
-        enable_token_counting = true, -- Whether to enable token counting. Default to true.
+        enable_token_counting = false, -- Whether to enable token counting. Default to true.
         auto_add_current_file = true, -- Whether to automatically add the current file when opening a new chat. Default to true.
         auto_approve_tool_permissions = {
           "rag_search",
@@ -126,12 +126,11 @@ return {
     build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
     opts = {
       auto_approve = function(params)
-        if params.server_name == "web-search" then
-          return true
-        end
-
-        -- default
-        return false
+        local approved = {
+          ["web-search"] = true,
+          ["neovim"] = true,
+        }
+        return approved[params.server_name] == true
       end,
     },
     dependencies = {
