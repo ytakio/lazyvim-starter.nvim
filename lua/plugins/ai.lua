@@ -13,14 +13,14 @@ return {
       -- this file can contain specific instructions for your project
       instructions_file = "avante.md",
       -- for example
-      provider = "sakura_dev",
+      provider = "sakura",
       providers = {
         ---@type AvanteProvider
         sakura = {
           __inherited_from = "openai",
           endpoint = "https://api.ai.sakura.ad.jp/v1",
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN", -- The name of the environment variable that contains the API key
-          model = "preview/Kimi-K2.6",
+          model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
         },
         sakura_dev = {
@@ -49,7 +49,7 @@ return {
           "glob",
           "search_keyword",
           "read_file_toplevel_symbols",
-          "read_file",
+          "view",
           "create_file",
           -- "move_path",
           "copy_path",
