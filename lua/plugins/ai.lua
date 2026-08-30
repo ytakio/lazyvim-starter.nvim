@@ -6,7 +6,7 @@ return {
     build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
     event = "VeryLazy",
-    version = "v0.1.2", -- Never set this value to "*"! Never!
+    version = "v0.2.3", -- Never set this value to "*"! Never!
     ---@module 'avante'
     opts = {
       -- add any opts here
@@ -15,13 +15,21 @@ return {
       -- for example
       provider = "sakura",
       providers = {
-        ---@type AvanteProvider
+        copilot_kimi = {
+          __inherited_from = "copilot",
+          model = "sakura-internet/sakura/preview%2FKimi-K2.6",
+        },
+        copilot_qwen = {
+          __inherited_from = "copilot",
+          model = "sakura-internet/sakura/preview%2FQwen3.6-35B-A3B",
+        },
         sakura = {
           __inherited_from = "openai",
           endpoint = "https://api.ai.sakura.ad.jp/v1",
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = { max_tokens = 8 * 4096 },
         },
         sakura_dev = {
           __inherited_from = "openai",
@@ -29,6 +37,7 @@ return {
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN_DEV", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = { max_tokens = 8 * 4096 },
         },
       },
       disabled_tools = { "web_search" },
