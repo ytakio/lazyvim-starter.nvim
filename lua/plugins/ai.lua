@@ -15,6 +15,22 @@ return {
       -- for example
       provider = "sakura",
       providers = {
+        snoopy = {
+          __inherited_from = "openai",
+          endpoint = "http://snoopy.local:1234/v1",
+          api_key_name = "", -- Dummy
+          model = "gemma-4",
+          timeout = 30000, -- Timeout in milliseconds
+          -- extra_request_body = { max_tokens = 8 * 4096 },
+        },
+        -- lmstudio = {
+        --   __inherited_from = "openai",
+        --   endpoint = "http://127.0.0.1:1234/v1",
+        --   api_key_name = "", -- Dummy
+        --   model = "qwen/qwen3.8-27b",
+        --   timeout = 30000, -- Timeout in milliseconds
+        --   extra_request_body = { max_tokens = 8 * 4096 },
+        -- },
         copilot_kimi = {
           __inherited_from = "copilot",
           model = "sakura-internet/sakura/preview%2FKimi-K2.6",
@@ -27,14 +43,6 @@ return {
           __inherited_from = "openai",
           endpoint = "https://api.ai.sakura.ad.jp/v1",
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN", -- The name of the environment variable that contains the API key
-          model = "preview/Kimi-K2.7-Code",
-          timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = { max_tokens = 8 * 4096 },
-        },
-        sakura_dev = {
-          __inherited_from = "openai",
-          endpoint = "https://gateway.aipf-dev.sakuraha.jp/v1",
-          api_key_name = "SAKURA_AI_ACCOUNT_TOKEN_DEV", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
           extra_request_body = { max_tokens = 8 * 4096 },
