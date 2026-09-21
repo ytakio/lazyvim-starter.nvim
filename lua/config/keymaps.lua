@@ -19,3 +19,7 @@ map("i", "<M-h>", "<Left>")
 map("i", "<M-j>", "<Down>")
 map("i", "<M-k>", "<Up>")
 map("i", "<M-l>", "<Right>")
+
+-- replace <C-Space>
+map("i", "<C-j>", "<C-Space>", { remap = true, desc = "just replace" })
+map("c", "<C-j>", "<C-Space>", { remap = true, desc = "just replace" })
