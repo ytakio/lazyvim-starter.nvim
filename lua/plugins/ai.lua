@@ -5,7 +5,7 @@ return {
     -- ⚠️ must add this setting! ! !
     build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
-    event = "VeryLazy",
+    cmd = { "AvanteAsk", "AvanteChat" },
     branch = "release-v0.3", -- Never set this value to "*"! Never!
     ---@module 'avante'
     opts = {
@@ -82,6 +82,18 @@ return {
         ---@type boolean
         acp_follow_agent_locations = true,
       },
+      -- system_prompt as function ensures LLM always has latest MCP server state
+      -- This is evaluated for every message, even in existing chats
+      system_prompt = function()
+        local hub = require("mcphub").get_hub_instance()
+        return hub and hub:get_active_servers_prompt() or ""
+      end,
+      -- Using function prevents requiring mcphub before it's loaded
+      custom_tools = function()
+        return {
+          require("mcphub.extensions.avante").mcp_tool(),
+        }
+      end,
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -94,6 +106,19 @@ return {
       "folke/snacks.nvim", -- for input provider snacks
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        "ravitemer/mcphub.nvim",
+        build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+        opts = {
+          auto_approve = function(params)
+            local approved = {
+              ["web-search"] = true,
+              ["neovim"] = true,
+            }
+            return approved[params.server_name] == true
+          end,
+        },
+      },
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -133,40 +158,6 @@ return {
             "<cmd>MarkdownPreviewToggle<cr>",
             desc = "Markdown Preview",
           },
-        },
-      },
-    },
-  },
-  {
-    "ravitemer/mcphub.nvim",
-    event = "VeryLazy",
-    build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
-    opts = {
-      auto_approve = function(params)
-        local approved = {
-          ["web-search"] = true,
-          ["neovim"] = true,
-        }
-        return approved[params.server_name] == true
-      end,
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "yetone/avante.nvim",
-        opts = {
-          -- system_prompt as function ensures LLM always has latest MCP server state
-          -- This is evaluated for every message, even in existing chats
-          system_prompt = function()
-            local hub = require("mcphub").get_hub_instance()
-            return hub and hub:get_active_servers_prompt() or ""
-          end,
-          -- Using function prevents requiring mcphub before it's loaded
-          custom_tools = function()
-            return {
-              require("mcphub.extensions.avante").mcp_tool(),
-            }
-          end,
         },
       },
     },
