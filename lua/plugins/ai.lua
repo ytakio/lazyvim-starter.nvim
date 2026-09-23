@@ -6,7 +6,7 @@ return {
     build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
     event = "VeryLazy",
-    branch = "release-v0.2", -- Never set this value to "*"! Never!
+    branch = "release-v0.3", -- Never set this value to "*"! Never!
     ---@module 'avante'
     opts = {
       -- add any opts here
