@@ -1,7 +1,6 @@
 return {
   {
     "LazyVim/LazyVim",
-    event = "VeryLazy",
     opts = {
       colorscheme = "tokyonight",
     },

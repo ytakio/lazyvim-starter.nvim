@@ -24,3 +24,5 @@ vim.g.lazyvim_python_lsp = "pyright"
 vim.g.lazyvim_python_ruff = "ruff"
 -- set animations disabled
 vim.g.snacks_animate = false
+-- Disable lualine's trouble integration to reduce startup time
+vim.g.trouble_lualine = false
