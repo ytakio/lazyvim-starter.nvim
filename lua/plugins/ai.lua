@@ -6,22 +6,22 @@ return {
     build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
     cmd = { "AvanteAsk", "AvanteChat" },
-    branch = "release-v0.3", -- Never set this value to "*"! Never!
+    branch = "release-v0.4", -- Never set this value to "*"! Never!
     ---@module 'avante'
     opts = {
       -- add any opts here
       -- this file can contain specific instructions for your project
       instructions_file = "avante.md",
       -- for example
-      provider = "sakura",
+      provider = "sakura_dev",
       providers = {
         snoopy = {
           __inherited_from = "openai",
-          endpoint = "http://snoopy.local:1234/v1",
+          endpoint = "http://snoopy.local:8080/v1",
           api_key_name = "", -- Dummy
-          model = "gemma-4",
+          model = "qwen3.8-flash-next-iq2_xs",
           timeout = 30000, -- Timeout in milliseconds
-          -- extra_request_body = { max_tokens = 8 * 4096 },
+          -- extra_request_body = { max_tokens = 8 * 1024 },
         },
         -- lmstudio = {
         --   __inherited_from = "openai",
@@ -31,18 +31,18 @@ return {
         --   timeout = 30000, -- Timeout in milliseconds
         --   extra_request_body = { max_tokens = 8 * 4096 },
         -- },
-        copilot_kimi = {
-          __inherited_from = "copilot",
-          model = "sakura-internet/sakura/preview%2FKimi-K2.6",
-        },
-        copilot_qwen = {
-          __inherited_from = "copilot",
-          model = "sakura-internet/sakura/preview%2FQwen3.6-35B-A3B",
-        },
         sakura = {
           __inherited_from = "openai",
           endpoint = "https://api.ai.sakura.ad.jp/v1",
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN", -- The name of the environment variable that contains the API key
+          model = "preview/Kimi-K2.7-Code",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = { max_tokens = 8 * 4096 },
+        },
+        sakura_dev = {
+          __inherited_from = "openai",
+          endpoint = "https://gateway.aipf-dev.sakuraha.jp/v1",
+          api_key_name = "SAKURA_AI_ACCOUNT_TOKEN_DEV", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
           extra_request_body = { max_tokens = 8 * 4096 },
@@ -98,6 +98,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+      { "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
       --- The below dependencies are optional,
       "nvim-mini/mini.pick", -- for file_selector provider mini.pick
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
