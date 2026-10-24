@@ -13,7 +13,7 @@ return {
       -- this file can contain specific instructions for your project
       instructions_file = "avante.md",
       -- for example
-      provider = "sakura_dev",
+      provider = "sakura",
       providers = {
         snoopy = {
           __inherited_from = "openai",
