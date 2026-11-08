@@ -26,3 +26,7 @@ vim.g.lazyvim_python_ruff = "ruff"
 vim.g.snacks_animate = false
 -- Disable lualine's trouble integration to reduce startup time
 vim.g.trouble_lualine = false
+
+-- File encodings
+vim.opt.fileencodings = { "ucs-bom", "utf-8", "shift-jis", "euc-jp", "default", "latin" }
+vim.opt.fileencoding = "utf-8"
