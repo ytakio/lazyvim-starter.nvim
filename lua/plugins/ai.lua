@@ -19,9 +19,9 @@ return {
           __inherited_from = "openai",
           endpoint = "http://snoopy.local:8080/v1",
           api_key_name = "", -- Dummy
-          model = "qwen3.8-flash-next-iq2_xs",
+          model = "strata",
           timeout = 30000, -- Timeout in milliseconds
-          -- extra_request_body = { max_tokens = 8 * 1024 },
+          extra_request_body = { max_tokens = 256 * 1024 },
         },
         -- lmstudio = {
         --   __inherited_from = "openai",
