@@ -5,17 +5,13 @@ return {
       formatters_by_ft = { cpp = { "clang-format" }, c = { "clang-format" } },
       formatters = {
         ["clang-format"] = {
-          -- Long bracket string keeps the style readable and easy to copy into a
-          -- .clang-format file. clang-format requires the flow-mapping braces and
-          -- a trailing comma after every entry, so keep them when adding options.
+          -- Single source of truth: the .clang-format file at the root of this
+          -- config. Referencing it by absolute path applies the style to every
+          -- project, and the very same file can be copied into any project (or
+          -- used by clangd/CI) to reuse the exact same settings.
           prepend_args = {
             "--style",
-            [[{
-              BasedOnStyle: Google,
-              IndentWidth: 4,
-              AccessModifierOffset: -4,
-              IndentCaseLabels: false,
-            }]],
+            "file:" .. vim.fn.stdpath("config") .. "/_clang-format",
           },
         },
       },
