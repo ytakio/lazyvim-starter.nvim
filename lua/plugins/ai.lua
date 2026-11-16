@@ -7,6 +7,24 @@ return {
       or "make",
     cmd = { "AvanteAsk", "AvanteChat" },
     branch = "release-v0.4", -- Never set this value to "*"! Never!
+    --- Local workaround for upstream issue avante-corp/avante.nvim#3179:
+    --- some OpenAI-compatible providers emit tool_use calls without the required
+    --- "path" argument (typically after a 504 / truncated tool arguments), which
+    --- crashes utils.path.is_absolute() with "bad argument #1 to 'byte'".
+    --- Returning false makes get_abs_path fall back to the project root, so the
+    --- tool reports a normal tool error instead of raising a Lua error.
+    --- Safe to delete once an upstream fix covering llm_tools/bash.lua is released.
+    config = function(_, opts)
+      local Path = require("avante.utils.path")
+      local is_absolute = Path.is_absolute
+      function Path.is_absolute(filepath)
+        if type(filepath) ~= "string" then
+          return false
+        end
+        return is_absolute(filepath)
+      end
+      require("avante").setup(opts)
+    end,
     ---@module 'avante'
     opts = {
       -- add any opts here
@@ -21,7 +39,7 @@ return {
           api_key_name = "", -- Dummy
           model = "strata",
           timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = { max_tokens = 256 * 1024 },
+          extra_request_body = { max_tokens = 262144 },
         },
         -- lmstudio = {
         --   __inherited_from = "openai",
@@ -37,7 +55,7 @@ return {
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = { max_tokens = 8 * 4096 },
+          extra_request_body = { max_tokens = 32 * 1024 },
         },
         sakura_dev = {
           __inherited_from = "openai",
@@ -45,7 +63,7 @@ return {
           api_key_name = "SAKURA_AI_ACCOUNT_TOKEN_DEV", -- The name of the environment variable that contains the API key
           model = "preview/Kimi-K2.7-Code",
           timeout = 30000, -- Timeout in milliseconds
-          extra_request_body = { max_tokens = 8 * 4096 },
+          extra_request_body = { max_tokens = 32 * 1024 },
         },
       },
       disabled_tools = { "web_search" },
@@ -114,6 +132,7 @@ return {
           auto_approve = function(params)
             local approved = {
               ["web-search"] = true,
+              ["mcp-searxng"] = true,
               ["neovim"] = true,
             }
             return approved[params.server_name] == true
