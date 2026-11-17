@@ -31,8 +31,11 @@ return {
       -- this file can contain specific instructions for your project
       instructions_file = "avante.md",
       -- for example
-      provider = "sakura",
+      provider = "copilot",
       providers = {
+        copilot = {
+          model = "sakura-internet/sakura/preview%2FKimi-K2.7-Code",
+        },
         snoopy = {
           __inherited_from = "openai",
           endpoint = "http://snoopy.local:8080/v1",
