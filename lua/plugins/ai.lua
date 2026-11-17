@@ -8,21 +8,53 @@ return {
     cmd = { "AvanteAsk", "AvanteChat" },
     branch = "release-v0.4", -- Never set this value to "*"! Never!
     --- Local workaround for upstream issue avante-corp/avante.nvim#3179:
-    --- some OpenAI-compatible providers emit tool_use calls without the required
-    --- "path" argument (typically after a 504 / truncated tool arguments), which
-    --- crashes utils.path.is_absolute() with "bad argument #1 to 'byte'".
-    --- Returning false makes get_abs_path fall back to the project root, so the
-    --- tool reports a normal tool error instead of raising a Lua error.
-    --- Safe to delete once an upstream fix covering llm_tools/bash.lua is released.
+    --- some OpenAI-compatible providers emit truncated tool_use calls where
+    --- required arguments are missing. The uncaught error aborts the whole
+    --- turn, so wrap tool execution in pcall and translate crashes into
+    --- normal tool errors. Safe to delete once avante validates tool
+    --- arguments upstream.
     config = function(_, opts)
-      local Path = require("avante.utils.path")
-      local is_absolute = Path.is_absolute
-      function Path.is_absolute(filepath)
-        if type(filepath) ~= "string" then
-          return false
+      local LLMTools = require("avante.llm_tools")
+      local process_tool_use = LLMTools.process_tool_use
+
+      local function get_tool_fields(tools, name)
+        for _, tool in ipairs(tools or {}) do
+          if tool.name == name then
+            return tool.param and tool.param.fields or {}
+          end
         end
-        return is_absolute(filepath)
+        return {}
       end
+
+      local function find_missing_required_arg(tools, tool_use)
+        local input = tool_use.input
+        if type(input) ~= "table" then
+          return nil
+        end
+        for _, field in ipairs(get_tool_fields(tools, tool_use.name)) do
+          if not field.optional then
+            local value = input[field.name]
+            if value == nil or value == vim.NIL then
+              return field.name
+            end
+          end
+        end
+        return nil
+      end
+
+      ---@diagnostic disable-next-line: duplicate-set-field
+      function LLMTools.process_tool_use(tools, tool_use, tool_opts)
+        local ok, result, error = pcall(process_tool_use, tools, tool_use, tool_opts)
+        if ok then
+          return result, error
+        end
+        local missing_arg = find_missing_required_arg(tools, tool_use)
+        if missing_arg then
+          return nil, "Missing required argument: " .. missing_arg .. " for tool: " .. tool_use.name
+        end
+        return nil, "Tool " .. tool_use.name .. " raised an error: " .. tostring(error)
+      end
+
       require("avante").setup(opts)
     end,
     ---@module 'avante'
@@ -69,7 +101,11 @@ return {
           extra_request_body = { max_tokens = 32 * 1024 },
         },
       },
-      disabled_tools = { "web_search" },
+      -- Built-in web search tool names are provider-prefixed (web_search_tavily), so
+      -- "web_search" matched nothing and the Tavily tool stayed enabled even though
+      -- TAVILY_API_KEY is unset and search is available via the web-search / mcp-searxng
+      -- MCP servers instead.
+      disabled_tools = { "web_search_tavily" },
       behaviour = {
         auto_suggestions = false, -- Experimental stage
         auto_set_highlight_group = true,
